@@ -15,12 +15,11 @@ Tài liệu này mô tả robot tay được thiết kế trong Onshape với ch
 - **Khớp 2 (Joint 2)**: đóng vai trò là vai tay, nối thẳng đến gripper dùng Servo Motor MG996R 
 
 - **End effector**: khả năng cầm nắm
-- **Cảm biến** : camera astra
+- **Cảm biến** : astra camera
 
 ## Điều khiển và mô phỏng
-- **Chiều vận hành**: (Manual control / PLC / ROS / script…)
-- **Mô phỏng chuyển động**: có hoặc không, công cụ (Onshape Motion, ROS MoveIt…).
-- **Thông số kỹ thuật**: tốc độ tối đa, tải trọng, thời gian vòng quay...
+- **Chiều vận hành**: Hệ thống dùng ros2 với astra camera (xác định vị trí của vật) 
+- **Mô phỏng chuyển động**: có sử dùng onshape 
 
 ## Hướng dẫn sử dụng
 1. Mở bản vẽ trong Onshape.
