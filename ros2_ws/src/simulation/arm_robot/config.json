@@ -1,0 +1,8 @@
+{
+  "url": "https://cad.onshape.com/documents/07728d6c31f1d10c2b5ab525/w/f2fad39e8d74a8209da09490/e/5085b4801f4a67a905f3d6da",
+
+  "output_format": "urdf",
+  "package_name": "simulation/arm_robot",
+  "robot_name": "arm_robot",
+  "assemblyName": "Robotic Arm 3D Model"
+}

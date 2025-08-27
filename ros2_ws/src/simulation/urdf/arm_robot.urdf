@@ -1,0 +1,156 @@
+<?xml version="1.0"?>
+<robot name="arm_robot">
+
+  <!-- ===================== LINK: base ===================== -->
+  <link name="base">
+    <!-- Inertial approx as a box: 0.16 x 0.16 x 0.04 m, m=0.6 kg -->
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.6"/>
+      <!-- inertia of a rectangular box (w=0.16, h=0.04, d=0.16) -->
+      <inertia
+        ixx="0.00042" iyy="0.00109" izz="0.00042"
+        ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://simulation/arm_robot/assets/base.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="grey_base"><color rgba="0.8 0.82 0.93 1"/></material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.16 0.16 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===================== LINK: waist ===================== -->
+  <link name="waist">
+    <!-- Inertial approx as a cylinder: r=0.035, h=0.06, m=0.35 kg -->
+    <inertial>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <mass value="0.35"/>
+      <!-- inertia (approx) -->
+      <inertia
+        ixx="0.00014" iyy="0.00014" izz="0.00009"
+        ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://simulation/arm_robot/assets/waist.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="blue_waist"><color rgba="0.12 0.42 1.0 1"/></material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0.03" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.035" length="0.06"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===================== LINK: arm_01 ===================== -->
+  <link name="arm_01">
+    <!-- Inertial approx as a box: 0.18 x 0.03 x 0.04 m, m=0.20 kg -->
+    <inertial>
+      <origin xyz="0.09 0 0" rpy="0 0 0"/>
+      <mass value="0.20"/>
+      <inertia
+        ixx="0.00013" iyy="0.00028" izz="0.00023"
+        ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+
+    <visual>
+      <!-- đặt gốc ở đầu gần shoulder; điều chỉnh nếu mesh lệch -->
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://simulation/arm_robot/assets/arm_01.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="blue_link"><color rgba="0.12 0.42 1.0 1"/></material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.09 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.18 0.03 0.04"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===================== LINK: arm_02_v3 (forearm + gripper as visual) ===================== -->
+  <link name="arm_02_v3">
+    <!-- Inertial approx as a box: 0.16 x 0.03 x 0.035 m, m=0.18 kg -->
+    <inertial>
+      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <mass value="0.18"/>
+      <inertia
+        ixx="0.00009" iyy="0.00019" izz="0.00016"
+        ixy="0" ixz="0" iyz="0"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://simulation/arm_robot/assets/arm_02_v3.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="blue_link2"><color rgba="0.12 0.42 1.0 1"/></material>
+    </visual>
+
+    <!-- Tuỳ chọn: hiển thị gripper như visual phụ (không có DOF) -->
+    <visual>
+      <origin xyz="0.18 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://simulation/arm_robot/assets/gripper_base.stl" scale="1 1 1"/>
+      </geometry>
+      <material name="white_gripper"><color rgba="1 1 1 1"/></material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.16 0.03 0.035"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <!-- ===================== JOINTS ===================== -->
+
+  <!-- base -> waist : yaw quanh Z -->
+  <joint name="base_yaw" type="revolute">
+    <!-- Đặt vị trí trục quay ở tâm đỉnh của base; chỉnh xyz theo lắp ráp thực -->
+    <origin xyz="0 0 0.02" rpy="0 0 0"/>
+    <parent link="base"/>
+    <child link="waist"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.1416" upper="3.1416" velocity="4.0" effort="6.0"/>
+  </joint>
+
+  <!-- waist -> arm_01 : pitch quanh Y -->
+  <joint name="shoulder_pitch" type="revolute">
+    <!-- vai tại mặt trên của waist; dịch x theo chốt thật (vd. 0.01m) -->
+    <origin xyz="0.01 0 0.06" rpy="0 0 0"/>
+    <parent link="waist"/>
+    <child link="arm_01"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.5708" upper="1.5708" velocity="3.0" effort="4.0"/>
+  </joint>
+
+  <!-- arm_01 -> arm_02_v3 : pitch quanh Y -->
+  <joint name="elbow_pitch" type="revolute">
+    <!-- khuỷu tay ở cuối arm_01 (0.18m) -->
+    <origin xyz="0.18 0 0" rpy="0 0 0"/>
+    <parent link="arm_01"/>
+    <child link="arm_02_v3"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-1.5708" upper="1.5708" velocity="3.0" effort="3.0"/>
+  </joint>
+
+</robot>
