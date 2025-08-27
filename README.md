@@ -23,7 +23,8 @@ Tài liệu này mô tả robot tay được thiết kế trong Onshape với ch
 - **Thông số kỹ thuật**: tốc độ tối đa, tải trọng, thời gian vòng quay...
 
 ## Hướng dẫn sử dụng
-1. Mở bản vẽ trong Onshape. (https://cad.onshape.com/documents/07728d6c31f1d10c2b5ab525/w/f2fad39e8d74a8209da09490/e/5085b4801f4a67a905f3d6da)
-2. Xem từng thành phần (khớp, ngàm...).
-3. Kiểm tra giới hạn vận hành (góc, tải trọng).
-4. Nếu có tích hợp điều khiển (script hoặc mô phỏng), hướng dẫn chạy thử.
+1. Mở bản vẽ trong Onshape.
+   (https://cad.onshape.com/documents/07728d6c31f1d10c2b5ab525/w/f2fad39e8d74a8209da09490/e/5085b4801f4a67a905f3d6da)
+3. Xem từng thành phần (khớp, ngàm...).
+4. Kiểm tra giới hạn vận hành (góc, tải trọng).
+5. Nếu có tích hợp điều khiển (script hoặc mô phỏng), hướng dẫn chạy thử.
